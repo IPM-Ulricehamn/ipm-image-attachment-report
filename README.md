@@ -4,15 +4,15 @@
 
 ```json
 {
-  "name": "ipm-ulricehamn/image-attachment-report",
+  "name": "ipm-ulricehamn/ipm-image-attachment-report",
   "description": "A WordPress plugin for generating reports on image attachments.",
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "require": {}
 }
 ```
-* "type": "wordpress-plugin" tells Composer that this is a WordPress plugin.
-* "ipm-ulricehamn/image-attachment-report" is the GitHub namespace.
+* `"type": "wordpress-plugin" tells Composer that this is a WordPress plugin.
+* `"ipm-ulricehamn/ipm-image-attachment-report"` is the GitHub namespace.
 
 ## Add the plugin to your project
 Go to your WordPress installation (which might also be a Git repository), and open or create a composer.json file.
@@ -24,30 +24,44 @@ Inside your WordPress installation's composer.json, add your plugin as a VCS (Ve
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:IPM-Ulricehamn/image-attachment-report.git"
+      "url": "git@github.com:IPM-Ulricehamn/ipm-image-attachment-report.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/afragen/git-updater"
     }
   ],
   "require": {
-    "ipm-ulricehamn/image-attachment-report": "dev-master",
-    "afragen/wp-github-updater": "^10.0"
+    "ipm-ulricehamn/ipm-image-attachment-report": "dev-master",
+    "afragen/git-updater": "^12.0",
+    "composer/installers": "^2.0"
   },
   "extra": {
     "installer-paths": {
       "wp-content/plugins/{$name}/": ["type:wordpress-plugin"]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
     }
   }
 }
 ```
 
 * "type": "vcs" tells Composer that this is a Version Control System (VCS) repository (i.e., a Git repo, rather than a package from Packagist).
-* "url": "git@github.com:IPM-Ulricehamn/image-attachment-report.git" is the SSH URL to your private GitHub repository.
+* `"url": "git@github.com:IPM-Ulricehamn/ipm-image-attachment-report.git"` is the SSH URL to your private GitHub repository.
 * "require": define the dependency (your plugin) and the version or branch you want to install (e.g., "dev-master").
 * "dev-main" refers to the default branch in your Git repository.
   By default, Composer assumes main as the primary branch.
   _If your default branch is master_, you need to change "dev-main" to "dev-master".
+* `composer/installers` helps Composer know how to handle the installation of WordPress plugins. It ensures that the plugins are installed in the right location (`wp-content/plugins/`).
+
 * If using HTTPS instead of SSH, use:
 ```json
-"url": "https://github.com/IPM-Ulricehamn/image-attachment-report.git"
+"url": "https://github.com/IPM-Ulricehamn/ipm-image-attachment-report.git"
 ```
 
 ### Private repo
@@ -82,7 +96,7 @@ composer update
 
 If you push new changes to GitHub, update the plugin with:
 ```sh
-composer update ipm-ulricehamn/image-attachment-report
+composer update ipm-ulricehamn/ipm-image-attachment-report
 ```
 
 
@@ -98,8 +112,8 @@ You'd also need to add these rows to the plugin header
 /*
 {other stuff}
  
-Update URI: https://github.com/IPM-Ulricehamn/image-attachment-report
-GitHub Plugin URI: IPM-Ulricehamn/image-attachment-report
+Update URI: https://github.com/IPM-Ulricehamn/ipm-image-attachment-report
+GitHub Plugin URI: IPM-Ulricehamn/ipm-image-attachment-report
 */
 ```
 

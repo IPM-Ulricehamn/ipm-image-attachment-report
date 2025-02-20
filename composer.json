@@ -1,5 +1,5 @@
 {
-	"name": "ipm-ulricehamn/image-attachment-report",
+	"name": "ipm-ulricehamn/ipm-image-attachment-report",
 	"description": "A WordPress plugin for generating reports on image attachments.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",

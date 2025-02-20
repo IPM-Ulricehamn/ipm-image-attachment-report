@@ -32,7 +32,7 @@ function iar_render_admin_page() {
 
 	// Filters
 	echo "<div class='filters-wrap'><form method='get' id='filter-form'>";
-	echo "<input type='hidden' name='page' value='image-attachment-report'>";
+	echo "<input type='hidden' name='page' value='ipm-image-attachment-report'>";
 
 	echo "<div><p><strong>Search in post types:</strong></p>";
 	foreach ($post_types as $type) {

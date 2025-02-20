@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Image Attachment Report
+Plugin Name: IPM Image Attachment Report
 Description: Lists all image attachments, their usage, dimensions, and resolution ranking. Includes CSV export.
 Version: 1.7
 Author: Erik Gripestam
-Update URI: https://github.com/IPM-Ulricehamn/image-attachment-report
-GitHub Plugin URI: IPM-Ulricehamn/image-attachment-report
+Update URI: https://github.com/IPM-Ulricehamn/ipm-image-attachment-report
+GitHub Plugin URI: IPM-Ulricehamn/ipm-image-attachment-report
 */
 
 if (!defined('ABSPATH')) {
@@ -26,8 +26,8 @@ include_once plugin_dir_path(__FILE__) . 'image-query.php';
 
 // Enqueue scripts & styles
 function iar_enqueue_assets($hook) {
-	//if ($hook !== 'upload.php?page=image-attachment-report') {
-	if ($hook !== 'upload.php' && strpos($hook, 'image-attachment-report') === false) {
+	//if ($hook !== 'upload.php?page=ipm-image-attachment-report') {
+	if ($hook !== 'upload.php' && strpos($hook, 'ipm-image-attachment-report') === false) {
 		return;
 	}
 	wp_enqueue_style('iar-style', plugin_dir_url(__FILE__) . 'assets/style.css');
@@ -44,7 +44,7 @@ function iar_add_media_submenu() {
 		'Image report',
 		'Image report',
 		'manage_options',
-		'image-attachment-report',
+		'ipm-image-attachment-report',
 		'iar_render_admin_page'
 	);
 }
