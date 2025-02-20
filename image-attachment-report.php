@@ -6,12 +6,19 @@ Version: 1.7
 Author: Erik Gripestam
 Update URI: https://github.com/IPM-Ulricehamn/image-attachment-report
 GitHub Plugin URI: IPM-Ulricehamn/image-attachment-report
-GitHub Access Token: YOUR_GITHUB_ACCESS_TOKEN
 */
 
 if (!defined('ABSPATH')) {
 	exit;
 }
+
+/* Enable automatic updates from github if token is defined in wp-config.php */
+add_filter('http_request_args', function($args, $url) {
+	if (strpos($url, 'github.com') !== false && defined('GITHUB_ACCESS_TOKEN')) {
+		$args['headers']['Authorization'] = 'Bearer ' . GITHUB_ACCESS_TOKEN;
+	}
+	return $args;
+}, 10, 2);
 
 // Include necessary files
 include_once plugin_dir_path(__FILE__) . 'admin-page.php';
