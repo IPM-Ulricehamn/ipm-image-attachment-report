@@ -4,6 +4,9 @@ Plugin Name: Image Attachment Report
 Description: Lists all image attachments, their usage, dimensions, and resolution ranking. Includes CSV export.
 Version: 1.7
 Author: Erik Gripestam
+Update URI: https://github.com/IPM-Ulricehamn/image-attachment-report
+GitHub Plugin URI: IPM-Ulricehamn/image-attachment-report
+GitHub Access Token: YOUR_GITHUB_ACCESS_TOKEN
 */
 
 if (!defined('ABSPATH')) {
