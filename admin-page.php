@@ -8,9 +8,8 @@ function iar_render_admin_page() {
 		wp_die('You do not have permission to view this page.');
 	}
 
-	//global $wpdb;
-
-	$lowres_threshold = isset($_GET['lowres_threshold']) ? intval($_GET['lowres_threshold']) : 1600;
+	// We no longer use a manual width threshold for quality; quality is based on MP.
+	// But we still support a filter for "low resolution" images.
 	$lowres_filter = isset($_GET['lowres']);
 
 	$excluded_types = ['attachment'];
@@ -37,7 +36,7 @@ function iar_render_admin_page() {
 	echo "<div><p><strong>Search in post types:</strong></p>";
 	foreach ($post_types as $type) {
 		$checked = in_array($type, $selected_types) ? "checked" : "";
-		if ( $type == 'wp_block' ) {
+		if ($type == 'wp_block') {
 			echo "<label><input type='checkbox' name='post_types[]' value='{$type}' {$checked}>Pattern</label>";
 		} else {
 			echo "<label>
@@ -45,27 +44,19 @@ function iar_render_admin_page() {
 				  </label>";
 		}
 	}
-
-
-	echo "</div><div><p><strong>Filter by resolution:</strong></p><p><label>
-            <input type='checkbox' name='lowres' value='1' " . ($lowres_filter ? "checked" : "") . "> Show only low-resolution images
-          </label></p>";
-
-	echo "<p><label>Threshold: 
-            <input type='number' name='lowres_threshold' placeholder='1600' value='{$lowres_threshold}' min='1' style='width: 80px;'>
-          px (width)</label></p></div>";
+	echo "</div>";
+	// Note: We removed the manual threshold input because quality is calculated via total MP.
+	echo "<div><p><strong>Filter by resolution:</strong></p><p><label>
+            <input type='checkbox' name='lowres' value='1' " . ($lowres_filter ? "checked" : "") . "> Show only low-resolution images (below 1 MP)
+          </label></p></div>";
 
 	echo "</form></div>";
-
-
 
 	echo "<div class='toggle-controls'><label>
         <input type='checkbox' id='toggle-thumbnails' checked> Show Thumbnails
       </label><label>
 		<input type='checkbox' id='toggle-row-numbers' checked> Show row numbers
 	  </label></div>";
-
-
 
 	// Fetch all image attachments
 	$attachments = get_posts([
@@ -82,8 +73,9 @@ function iar_render_admin_page() {
 
 	// Initialize counters
 	$total_images = 0;
-	$high_res_images = 0;
-	$low_res_images = 0;
+	$good_images = 0;
+	$medium_images = 0;
+	$low_images = 0;
 	$row_number = 1;
 
 	ob_start();
@@ -98,18 +90,28 @@ function iar_render_admin_page() {
 		$height = $meta['height'];
 		$filename = basename(get_attached_file($attachment->ID));
 
-		$is_low_res = ($width < $lowres_threshold);
-		$resolution_status = $is_low_res
-			? "<span class='low-res'>Low</span>"
-			: "<span class='high-res'>OK</span>";
+		// Calculate total pixel area and convert to megapixels (MP)
+		$area_pixels = $width * $height;
+		$area_mp = $area_pixels / 1000000;
+		$area_mp_rounded = round($area_mp, 1);
 
-		if ($is_low_res) {
-			$low_res_images++;
+		// Determine quality based on total MP
+		if ($area_mp < 1) {
+			$quality = 'Low';
+			$quality_class = 'low-res';
+			$low_images++;
+		} elseif ($area_mp < 2) {
+			$quality = 'Medium';
+			$quality_class = 'medium-res';
+			$medium_images++;
 		} else {
-			$high_res_images++;
+			$quality = 'Good';
+			$quality_class = 'high-res';
+			$good_images++;
 		}
 
-		if ($lowres_filter && !$is_low_res) {
+		// If filtering low-res images and this image is not low quality, skip it.
+		if ($lowres_filter && $quality !== 'Low') {
 			continue;
 		}
 
@@ -140,13 +142,13 @@ function iar_render_admin_page() {
 					$post_type = get_post_type($id);
 					$post_title = get_the_title($id);
 					$edit_link = get_edit_post_link($id);
-					$used_in_links .= "<a href='{$edit_link}'>{$post_title}</a>[" . $post_type . "] (" . implode(", ", array_unique($methods)) . ")<br>";
+					//$used_in_links .= "<a href='{$edit_link}'>{$post_title}</a>[" . $post_type . "] (" . implode(", ", array_unique($methods)) . ")<br>";
+					$used_in_links .= "<a href='{$edit_link}'>{$post_title}</a> [{$post_type}] (" . implode(", ", array_unique($methods)) . ")<br>";
 				}
 			}
 		} else {
 			$used_in_links = "Not found in content";
 		}
-
 
 		$thumbnail = wp_get_attachment_image($attachment->ID, 'thumbnail', false, ['class' => 'thumb-preview']);
 
@@ -156,7 +158,7 @@ function iar_render_admin_page() {
             <td><a href='{$attachment_link}'>{$filename}</a></td>
             <td>{$used_in_links}</td>
             <td>{$width} x {$height}</td>
-            <td>{$resolution_status}</td>
+            <td><span class='{$quality_class}'>{$quality} ({$area_mp_rounded} MP)</span></td>
           </tr>";
 
 		$row_number++;
@@ -164,11 +166,12 @@ function iar_render_admin_page() {
 
 	$table_content = ob_get_clean();
 
-	// Display the counter
+	// Display the counter and quality summary
 	echo "<div class='image-report-stats'>
         <div><strong>Total images (current view):</strong> <span id='total-count'>{$total_images}</span></div>
-        <div><strong>High resolution total:</strong> <span id='highres-count'>{$high_res_images}</span></div>
-        <div><strong>Low resolution total:</strong> <span id='lowres-count'>{$low_res_images}</span></div>
+        <div><strong>Good (≥ 2 MP):</strong> <span id='good-count'>{$good_images}</span></div>
+        <div><strong>Medium (1-2 MP):</strong> <span id='medium-count'>{$medium_images}</span></div>
+        <div><strong>Low (&lt; 1 MP):</strong> <span id='low-count'>{$low_images}</span></div>
       </div>";
 
 	if ($total_images > 0) {
