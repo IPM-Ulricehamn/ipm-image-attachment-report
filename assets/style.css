@@ -1,0 +1,55 @@
+.export-panel {
+	margin: 1rem 0 2rem;
+}
+.filters-wrap {
+	/*background: #fff;
+	background: #f5f5f5;
+	padding: .25rem 1rem .75rem;*/
+	width: 75%;
+}
+.filters-wrap form {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2rem;
+}
+
+.thumb-preview {
+	width: 50px;
+	height: auto;
+	border-radius: 4px;
+}
+
+.high-res {
+	color: green;
+	font-weight: bold;
+}
+
+.low-res {
+	color: red;
+	font-weight: bold;
+}
+
+.image-report-stats {
+	background: #fcfcfc;
+	border-radius: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-bottom: 15px;
+	padding: 12px;
+}
+
+.toggle-controls {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin: 1rem 0 1.5rem;
+}
+
+.row-number {
+	display: table-cell;
+}
+
+#toggle-row-numbers:not(:checked) ~ #image-report-table .row-number {
+	display: none;
+}
