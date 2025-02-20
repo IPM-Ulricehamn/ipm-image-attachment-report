@@ -88,7 +88,7 @@ composer update itest-ulricehamn/image-attachment-report
 If you want to avoid using "type": "vcs", you can publish GitHub Releases (tags) and use "type": "package" instead. This is useful if you prefer fetching only stable versions.
 
 
-## Github Updater
+## GitHub Updater
 This is added to require to listen for updates on a private repo (not needed if the repo is public).
 You'd also need to add these rows to the plugin header
 ```php
