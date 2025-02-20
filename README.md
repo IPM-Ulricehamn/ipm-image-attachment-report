@@ -41,7 +41,7 @@ Inside your WordPress installation's composer.json, add your plugin as a VCS (Ve
 
 * "type": "vcs" tells Composer that this is a Version Control System (VCS) repository (i.e., a Git repo, rather than a package from Packagist).
 * "url": "git@github.com:IPM-Ulricehamn/image-attachment-report.git" is the SSH URL to your private GitHub repository.
-* "require" ensures the plugin is installed under wp-content/plugins/.
+* "require": define the dependency (your plugin) and the version or branch you want to install (e.g., "dev-master").
 * "dev-main" refers to the default branch in your Git repository.
   By default, Composer assumes main as the primary branch.
   _If your default branch is master_, you need to change "dev-main" to "dev-master".
@@ -82,7 +82,7 @@ composer update
 
 If you push new changes to GitHub, update the plugin with:
 ```sh
-composer update itest-ulricehamn/image-attachment-report
+composer update ipm-ulricehamn/image-attachment-report
 ```
 
 
