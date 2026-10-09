@@ -62,9 +62,16 @@ function iar_render_admin_page() {
 	$attachments = get_posts([
 		'post_type'      => 'attachment',
 		'post_status'    => 'inherit',
-		'post_mime_type' => 'image',
+		'post_mime_type' => ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif'],
 		'numberposts'    => -1,
 	]);
+
+	/*
+	 Less efficient way if the query on mime types won't work good enough
+	$attachments = array_filter($attachments, function ($attachment) {
+		return get_post_mime_type($attachment->ID) !== 'image/svg+xml';
+	});
+	*/
 
 	if (empty($attachments)) {
 		echo "<p>No images found matching the criteria.</p>";
