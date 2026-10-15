@@ -1,0 +1,23 @@
+= 1.8.1 =
+* Post type filter is now "Exclude post types" (opt-out, nothing ticked by default). Previously unticking every box silently reset the view to all post types with all boxes ticked again.
+* Added an "Exclude files by type" filter with one checkbox per file type found in the scan (e.g. JPG, PNG, SVG; jpeg is merged into JPG). Matches on the cached filename extension, so no re-scan is needed. The total count and CSV export follow the filter; the Good/Medium/Low counters still reflect the whole library.
+* Fixed CSV export being cut off at the first "#" (or "%") in the data, e.g. a post titled "Exempelprojekt #2". The file was built as an encodeURI()'d data: URI, which does not escape "#", so everything after it was treated as a URL fragment. It is now generated as a Blob download.
+* CSV export now includes a UTF-8 BOM so Excel displays åäö correctly.
+
+= 1.8.0 =
+* Performance: the per-image usage lookup (which runs several LIKE/REGEXP scans across posts, postmeta, usermeta and termmeta) no longer runs on every page load. It now only runs when explicitly triggered via a new "Run scan" button on the report page, and the results are cached in a transient. Filtering and pagination read from that cache instead of re-scanning the database.
+* Added pagination (50 images per page) to the report table.
+* The low-resolution filter and post-type filter now apply to the cached scan results instead of affecting which database queries run.
+* Security/correctness: escaped all dynamic output in the admin page (filenames, titles, usernames, term names, links, attribute values) with esc_html()/esc_attr()/esc_url().
+* Fixed a double-escaping bug where attachment URLs were passed through esc_sql() and then again through $wpdb->prepare(), which could corrupt matches; LIKE values are now escaped with $wpdb->esc_like() instead.
+* Replaced manual esc_sql()-and-concatenate post type IN (...) clauses with proper $wpdb->prepare() placeholders.
+* Removed a debug error_log() call that fired on every image on every page load.
+* Removed dead/commented-out code (old ACF gallery meta query).
+* Tightened the GitHub token http_request_args filter so the token is only attached to requests for this plugin's own GitHub repo/update endpoint, not any request touching github.com.
+* Added text domain (ipm-image-attachment-report), wrapped admin strings for translation, and added a languages/ folder with a starter .pot file plus a Swedish (sv_SE) .po/.mo translation.
+* Fixed the resolution quality label (Low/Medium/Good) not being translatable — it was previously built with ucfirst() on an internal English key instead of going through a translation function.
+* Added cache-busting (filemtime-based) versioning to the enqueued CSS/JS.
+* Rewrote README.md to document what the plugin does and how the scan/cache behavior works, in addition to the existing Composer/GitHub Updater installation instructions.
+
+= 1.7.3 =
+* Prior version. See git history for earlier changes.

@@ -1,0 +1,179 @@
+# Copyright (C) 2026 Erik Gripestam
+# This file is distributed under the same license as the IPM Image Attachment Report plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: IPM Image Attachment Report 1.8.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ipm-image-attachment-report\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-15T12:40:23+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: ipm-image-attachment-report\n"
+
+#. Plugin Name of the plugin
+#: image-attachment-report.php
+msgid "IPM Image Attachment Report"
+msgstr ""
+
+#. Description of the plugin
+#: image-attachment-report.php
+msgid "Lists all image attachments, their usage, dimensions, and resolution ranking. Includes CSV export."
+msgstr ""
+
+#. Author of the plugin
+#: image-attachment-report.php
+msgid "Erik Gripestam"
+msgstr ""
+
+#: admin-page.php:10
+msgid "You do not have permission to view this page."
+msgstr ""
+
+#: admin-page.php:16
+msgid "Scan complete."
+msgstr ""
+
+#: admin-page.php:41
+msgid "Image Attachment Report"
+msgstr ""
+
+#: admin-page.php:46
+msgid "No report has been generated yet. Click \"Run scan\" above to build one."
+msgstr ""
+
+#: admin-page.php:51
+msgid "Export current list to CSV"
+msgstr ""
+
+#: admin-page.php:59
+msgid "Show Thumbnails"
+msgstr ""
+
+#: admin-page.php:61
+msgid "Show row numbers"
+msgstr ""
+
+#: admin-page.php:93
+msgid "Total images (current view):"
+msgstr ""
+
+#: admin-page.php:94
+msgid "Good (≥ 2 MP):"
+msgstr ""
+
+#: admin-page.php:95
+msgid "Medium (1-2 MP):"
+msgstr ""
+
+#: admin-page.php:96
+msgid "Low (< 1 MP):"
+msgstr ""
+
+#: admin-page.php:100
+msgid "No images found matching the selected filters."
+msgstr ""
+
+#: admin-page.php:117
+msgid "Thumbnail"
+msgstr ""
+
+#: admin-page.php:118
+msgid "Filename"
+msgstr ""
+
+#: admin-page.php:119
+msgid "Used In"
+msgstr ""
+
+#: admin-page.php:120
+msgid "Dimensions"
+msgstr ""
+
+#: admin-page.php:121
+msgid "Resolution"
+msgstr ""
+
+#. translators: 1: human-readable time difference, e.g. "3 hours". 2: number of images.
+#: admin-page.php:142
+#, php-format
+msgid "Last scanned %1$s ago (%2$d images)."
+msgstr ""
+
+#: admin-page.php:148
+msgid "No scan has been run yet."
+msgstr ""
+
+#: admin-page.php:153
+msgid "Run scan"
+msgstr ""
+
+#: admin-page.php:154
+msgid "Scanning inspects every image attachment against your content and can take a while on large libraries. Filtering and pagination below use the cached results and do not re-scan."
+msgstr ""
+
+#: admin-page.php:183
+msgid "Exclude post types:"
+msgstr ""
+
+#: admin-page.php:187
+msgid "Pattern"
+msgstr ""
+
+#: admin-page.php:192
+msgid "Filter by resolution:"
+msgstr ""
+
+#: admin-page.php:194
+msgid "Show only low-resolution images (below 1 MP)"
+msgstr ""
+
+#: admin-page.php:197
+msgid "Exclude files by type:"
+msgstr ""
+
+#: admin-page.php:211
+msgid "Good"
+msgstr ""
+
+#: admin-page.php:213
+msgid "Medium"
+msgstr ""
+
+#: admin-page.php:215
+msgid "Low"
+msgstr ""
+
+#. translators: 1: quality label (Low/Medium/Good). 2: megapixel value.
+#: admin-page.php:226
+#, php-format
+msgid "%1$s (%2$s MP)"
+msgstr ""
+
+#: admin-page.php:255
+msgid "Unknown user"
+msgstr ""
+
+#: admin-page.php:256
+msgid "User:"
+msgstr ""
+
+#: admin-page.php:259
+msgid "Unknown term"
+msgstr ""
+
+#: admin-page.php:260
+msgid "Term:"
+msgstr ""
+
+#: admin-page.php:264
+msgid "Not found in content"
+msgstr ""
+
+#: image-attachment-report.php:55
+#: image-attachment-report.php:56
+msgid "Image report"
+msgstr ""

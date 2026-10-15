@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 	const filterForm = document.getElementById("filter-form");
 
-	// Auto-reload when post type checkboxes change
-	document.querySelectorAll("input[name='post_types[]']").forEach(checkbox => {
+	// Auto-reload when post type exclusion checkboxes change
+	document.querySelectorAll("input[name='exclude_post_types[]']").forEach(checkbox => {
 		checkbox.addEventListener("change", function () {
 			filterForm.submit();
 		});
@@ -26,6 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			filterForm.submit();
 		});
 	}
+
+	// Auto-reload when file type exclusion checkboxes change
+	document.querySelectorAll("input[name='exclude_types[]']").forEach(checkbox => {
+		checkbox.addEventListener("change", function () {
+			filterForm.submit();
+		});
+	});
 
 	// Toggle thumbnails on/off
 	const toggleThumbnailsCheckbox = document.getElementById("toggle-thumbnails");
@@ -53,20 +60,24 @@ document.addEventListener("DOMContentLoaded", function () {
 	const exportCsvButton = document.getElementById("iar-export-csv");
 	if (exportCsvButton) {
 		exportCsvButton.addEventListener("click", function () {
-			let csvContent = "data:text/csv;charset=utf-8," +
-				Array.from(document.querySelectorAll("#image-report-table tr"))
-					.map(row => Array.from(row.querySelectorAll("th:not(.toggle-thumbnail):not(.row-number), td:not(.toggle-thumbnail):not(.row-number)"))
-						.map(cell => `"${cell.innerText.replace(/"/g, '""')}"`)
-						.join(","))
-					.join("\n");
+			// Use a Blob rather than a data: URI. encodeURI() leaves "#" and "%" untouched,
+			// which truncated the file at the first "#" in a post title.
+			const csv = Array.from(document.querySelectorAll("#image-report-table tr"))
+				.map(row => Array.from(row.querySelectorAll("th:not(.toggle-thumbnail):not(.row-number), td:not(.toggle-thumbnail):not(.row-number)"))
+					.map(cell => `"${cell.innerText.replace(/"/g, '""')}"`)
+					.join(","))
+				.join("\n");
 
-			let encodedUri = encodeURI(csvContent);
-			let link = document.createElement("a");
-			link.href = encodedUri;
+			// BOM so Excel reads UTF-8 (åäö) correctly
+			const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = url;
 			link.download = "image_report.csv";
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);
+			URL.revokeObjectURL(url);
 		});
 	}
 });

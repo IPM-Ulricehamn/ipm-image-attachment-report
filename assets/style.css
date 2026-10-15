@@ -1,16 +1,26 @@
 .export-panel {
 	margin: 1rem 0 2rem;
 }
+
+p.iiar-desc {
+	margin: 1rem 0;
+}
+
 .filters-wrap {
 	/*background: #fff;
 	background: #f5f5f5;
 	padding: .25rem 1rem .75rem;*/
-	width: 75%;
 }
 .filters-wrap form {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 2rem;
+	display: flex;
+	gap: 4rem;
+}
+.filters-wrap form .iiar-filter-group {
+	display: flex;
+	gap: 1rem;
+}
+.filters-wrap form .iiar-filter-group label {
+	white-space: nowrap;
 }
 
 .thumb-preview {
@@ -43,7 +53,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;
-	margin: 1rem 0 1.5rem;
+	margin: 2rem 0 1rem;
 }
 
 .row-number {
@@ -52,4 +62,21 @@
 
 #toggle-row-numbers:not(:checked) ~ #image-report-table .row-number {
 	display: none;
+}
+
+.iiar-tablenav {
+	display: flex;
+	gap: .5rem;
+	justify-content: flex-end;
+	margin-block: 1rem;
+
+	.iiar-tablenav-pages {
+		.button {
+			align-items: center;
+			display: flex;
+			font-size: 13px;
+			justify-items: center;
+			line-height: 1;
+		}
+	}
 }
